@@ -7,6 +7,14 @@ using namespace at;
  * quantize a FloatTensor into fixed point number with word length [wl]
  * and fractional bits [fl], with option of clamping the over/underflow numbers
  * having a symmeric number range.
+ * Floor Rounding.
+ **/
+Tensor fixed_point_quantize_floor_cuda(Tensor a, int wl, int fl, bool use_clamp, bool symmetric);
+
+/**
+ * quantize a FloatTensor into fixed point number with word length [wl]
+ * and fractional bits [fl], with option of clamping the over/underflow numbers
+ * having a symmeric number range.
  * Stochastic Rounding.
  **/
 Tensor fixed_point_quantize_stochastic_cuda(Tensor a, int wl, int fl, bool use_clamp, bool symmetric);

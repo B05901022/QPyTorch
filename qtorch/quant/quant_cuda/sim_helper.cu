@@ -13,6 +13,13 @@ __device__ __forceinline__ float round(float a, float r, int sigma) {
   return a;
 }
 
+__device__ __forceinline__ float floorfunc(float a, int sigma) {
+  a = ldexp(a, -sigma); 
+  a = floor(a);
+  a = ldexp(a, sigma);
+  return a;
+}
+
 __device__ __forceinline__ float nearest_round(float a, int sigma) {
   a = ldexp(a, -sigma); 
   // a = nearbyint(a);

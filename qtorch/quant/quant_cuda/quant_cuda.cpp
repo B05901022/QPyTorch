@@ -10,6 +10,12 @@ using namespace at;
   CHECK_CUDA(x);       \
   CHECK_CONTIGUOUS(x)
 
+Tensor fixed_point_quantize_floor(Tensor a, int wl, int fl, bool use_clamp, bool symmetric)
+{
+  CHECK_INPUT(a);
+  return fixed_point_quantize_floor_cuda(a, wl, fl, use_clamp, symmetric);
+}
+
 Tensor fixed_point_quantize_nearest(Tensor a, int wl, int fl, bool use_clamp, bool symmetric)
 {
   CHECK_INPUT(a);
@@ -74,6 +80,7 @@ Tensor float_quantize_stochastic(Tensor a, int man_bits, int exp_bits)
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m)
 {
+  m.def("fixed_point_quantize_floor", &fixed_point_quantize_floor, "Fixed Point Number Floor Quantization (CUDA)");
   m.def("fixed_point_quantize_stochastic", &fixed_point_quantize_stochastic, "Fixed Point Number Stochastic Quantization (CUDA)");
   m.def("fixed_point_quantize_stochastic_mask", &fixed_point_quantize_stochastic_mask, "Fixed Point Number Stochastic Quantization (CUDA)");
   m.def("block_quantize_stochastic", &block_quantize_stochastic, "Block Floating Point Number Stochastic Quantization (CUDA)");

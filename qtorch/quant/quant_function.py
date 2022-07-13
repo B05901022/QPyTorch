@@ -231,13 +231,15 @@ def fixed_point_quantize(x, wl, fl, clamp=True, symmetric=False, rounding="stoch
         - a quantized low-precision block floating point number (torch.Tensor)
     """
     assert isinstance(x, torch.Tensor)
-    assert rounding in ["stochastic", "nearest"]
+    assert rounding in ["stochastic", "nearest", "floor"]
     assert_wl_fl(wl, fl)
     quant_module = get_module(x)
     if rounding == "nearest":
         out = quant_module.fixed_point_quantize_nearest(x.contiguous(), wl, fl, clamp, symmetric)
     elif rounding == "stochastic":
         out = quant_module.fixed_point_quantize_stochastic(x.contiguous(), wl, fl, clamp, symmetric)
+    elif rounding == "floor":
+        out = quant_module.fixed_point_quantize_floor(x.contiguous(), wl, fl, clamp, symmetric)
     return out
 
 
